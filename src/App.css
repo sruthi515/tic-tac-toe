@@ -1,38 +1,198 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  /* text-align: center; */
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App-logo{
+  margin-top: 42px;
+  margin-left: 68px;
+}
+.welcome-border{
+  opacity: 0.11;
+}
+.container{
+  display:flex;
+}
+.welcome-container{
+  padding: 20px;
+  color: #F0F0F0;
+  /* width: 480px; */
+  width: 36%;
+  height: 480px;
+  border: 2px dashed #515964;
+  background: #0B233F 0% 0% no-repeat padding-box;
+  border-radius: 24px;
+  /* margin-left: 28%; */
+  margin-left: 4%;
+  box-shadow: 0px 3px 6px #000000;
+}
+.player-status-1{
+  flex: 0.3;
+  align-self: center;
+  margin-left: 15%;
+  text-align: center;
+
+}
+.player-status-2{
+  flex: 0.3;
+  height: 200px;
+  text-align: center;
+  align-self: center;
+  margin-left: 5%;
+  margin-top: -26px;
+}
+.winner{
+  text-align: center;
+  width: 230px;
+  height: 200px;
+  margin-left: 15%;
+  padding-bottom:15px;
+}
+.winner-name{
+  font-size:25px;
+  font-weight: bold;
+}
+.player-container-1{
+  padding: 3px 15px;
+  border-radius: 24px;
+  background: #253952 0% 0% no-repeat padding-box; 
+
+}
+.player-container-2{
+  padding: 3px 15px;
+  border-radius: 24px;
+  background: #253952 0% 0% no-repeat padding-box; 
+
+}
+.welcome-content{  
+  /* width: 340px;
+  height: 362px; */
+  width: 70%;
+  height: 76%;
+  padding: 56px 70px;
+  border-radius: 24px;
+  background: #253952 0% 0% no-repeat padding-box;
+}
+.game-container{  
+  /* width: 340px;
+  height: 362px; */
+  /* width: 70%; */
+  height: 100%;
+  /* padding: 56px 70px; */
+  border-radius: 24px;
+  background: #253952 0% 0% no-repeat padding-box;  
+}
+.welcome-text{
+  letter-spacing: 0.83px;
+  text-align: center;
+}
+.winner-text{
+  letter-spacing: 0.83px;
+  text-align: center;
+  margin: 0% 35%;
+  font-size: 25px;
+  font-weight: normal;
+}
+.tic-text{
+  color: #FBA202;
+  letter-spacing: 0.83px;
+  text-align: center;
+}
+.continue{
+  /* width: 330px; */
+  width: 97%;
+  height: 49px;
+  background: transparent linear-gradient(270deg, #FBA202 0%, #FF5800 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #000000;
+  border-radius: 2px;
+  opacity: 1;
+  color: white;
+  border: black;
+  margin-top: 15px;
+}
+.form-group{
+  display: grid;
+  margin: 30px 0px;
+}
+.form-input{
+  /* width: 300px;
+  height: 49px; */
+  width: 88%;
+  height: 49px;
+  color: white;
+  border: 1px solid #F0F0F0;
+  background: #253952 0% 0% no-repeat padding-box;
+  border-radius: 2px;
+  padding: 0px 14px;
+  margin:10px 0px;
+  opacity: 1;
+}
+.form-label{
+  text-align: left;
+  margin: 5px 0px;
+}
+.grid-row {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  /* padding: 10px; */
+  height: inherit;
+}
+.grid-item {
+  border: 1px dashed #515964;
+  color: white;
+  width: 155px;
+  height: 160px;
+  font-size: 30px;
+  text-align: center;
+  font-size: 100px;
+  font-weight: bold;
+  outline: none;
+  /* border-bottom: 2px dashed #515964; */
+  background: #253952 0% 0% no-repeat padding-box;
+}
+.cirxle_x{
+  font-size: 50px;
+  font-weight: bold;
+  margin: 0px;
+}
+.ml-28{
+  margin-left: 28%;
+}
+.text-orange{
+  color: orange;
+}
+.border-orange{
+  border: 2px solid orange;
+  border-radius:24px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dot {
+  height: 10px;
+  width: 10px;
+  margin:10px 5px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  opacity: 1;
+  border-radius: 50%;
+  display: inline-block;
 }
+.dot-grey{
+  height: 10px;
+  width: 10px;
+  margin:10px 5px;
+  border-radius: 50%;
+  display: inline-block;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  opacity: 0.25;
+}
+
+/* .grid-1{
+  border-right: 2px dashed #515964;
+  border-bottom: 2px dashed #515964;
+}
+.grid-2{
+  border-bottom: 2px dashed #515964;
+}
+.grid-3{
+  border-right: 2px dashed #515964;
+
+} */
