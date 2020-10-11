@@ -1,33 +1,111 @@
 import { combineReducers } from 'redux'
-import { UPDATE_TASK_DETAILS  } from '../actions'
+import { START_GAME, ON_STEP_CHANGE, SET_USER_NAMES, UPDATE_ROUND_STATUS, RESET_ROUND_HISTORY, RESET_GAME_HISTORY } from '../actions'
 
-let initialState = {
-    roundNumber:0,
-    playerA:[
-        { 
-            name:'', 
-            noOfWins:[false,false,false,false,false,false]
+let playersInitialState = {
+    roundNumber: 0,
+    totalRounds: 1,
+    gameCompleted: false,
+    isGameDraw: false,
+    gameWinner: null,
+    players: {
+        playerA: {
+            name: '',
+            noOfWins: Array(6).fill(false)
         },
-    ],
-    playerB:[
-        { 
-            name:'', 
-            noOfWins:[false,false,false,false,false,false]
-        },
-    ]
+        playerB: {
+            name: '',
+            noOfWins: Array(6).fill(false)
+        }
+    }
 }
 
-function playerHandler(state = initialState, action) {
+function playerHandler(state = playersInitialState, action) {
+
     switch (action.type) {
-        case UPDATE_TASK_DETAILS:
-            return [{
-                name: action.name,
-                noOfWins:action.noOfWins
-            }, ...state]
+        case UPDATE_ROUND_STATUS:
+            // debugger;
+
+            let gameCompleted = (state.roundNumber == state.totalRounds)
+
+            var newState = { ...state, roundNumber: state.roundNumber + 1, gameCompleted }
+
+            newState.players[action.winner]["noOfWins"][state.roundNumber - 1] = true
+
+            if (gameCompleted) {
+                let noOfWinsForA = newState.players.playerA.noOfWins.filter(Boolean).length
+                let noOfWinsForB = newState.players.playerB.noOfWins.filter(Boolean).length
+                let isGameDraw = noOfWinsForA == noOfWinsForB
+                let gameWinner = isGameDraw ? null : (noOfWinsForA > noOfWinsForB ? state.players.playerA.name : state.players.playerB.name)
+                newState = { ...newState, gameCompleted: true, isGameDraw, gameWinner }
+            }
+            return newState
+
+        case START_GAME:
+            return { ...state, roundNumber: state.roundNumber + 1 };
+
+        case SET_USER_NAMES:
+            let current_state = { ...state }
+            current_state.players.playerA.name = action.playerA
+            current_state.players.playerB.name = action.playerB
+            return current_state;
+
+        case RESET_GAME_HISTORY:
+            debugger;
+            var newState = {
+                roundNumber: 0,
+                totalRounds: 1,
+                gameCompleted: false,
+                isGameDraw: false,
+                gameWinner: null,
+                players: {
+                    playerA: {
+                        name: '',
+                        noOfWins: Array(6).fill(false)
+                    },
+                    playerB: {
+                        name: '',
+                        noOfWins: Array(6).fill(false)
+                    }
+                }
+            }
+            newState.players.playerA.name = state.players.playerA.name
+            newState.players.playerB.name = state.players.playerB.name
+            debugger;
+            return newState;
 
         default: return state;
     }
 }
 
-const playerReducer = combineReducers({ player_info: playerHandler })
+let gameInitialState = {
+    xIsNext: true,
+    stepNumber: 0,
+    gameHistory: [
+        { squares: Array(9).fill(null) }
+    ],
+}
+function gameHandler(state = gameInitialState, action) {
+    // debugger;
+    switch (action.type) {
+        case ON_STEP_CHANGE:
+            return {
+                xIsNext: !state.xIsNext,
+                gameHistory: state.gameHistory.concat({
+                    squares: action.squares
+                }),
+                stepNumber: state.gameHistory.length,
+            }
+        case RESET_ROUND_HISTORY:
+            let newState = { ...state, ...gameInitialState }
+            // debugger
+            return newState;
+
+        default: return state;
+    }
+}
+
+const playerReducer = combineReducers({
+    player_info: playerHandler,
+    game_info: gameHandler
+})
 export default playerReducer;

@@ -1,81 +1,77 @@
-import React, { useState }  from 'react';
+import React, { Component }  from 'react';
 import { connect } from 'react-redux';
-import { updateTaskDetails } from '../actions';
+import { withRouter } from "react-router-dom";
+import { setUserNames, startGame } from '../actions';
 import '../App.css';
 
+class Welcome extends Component {
 
-export function Welcome (props){
-    
-    // const [palyerA, setpalyerA] = useState('')
-    // const [palyerB, setpalyerB] = useState('')
-    const submitHandler= (e) => {
-    e.preventDefault();
-    // console.log("values::",palyerA,palyerB);
-    // const players = [
-    //         { 
-    //             name:palyerA, 
-    //             noOfWins:[false,false,false,false,false,false]
-    //         },
-    //         { 
-    //             name:palyerB, 
-    //             noOfWins:[false,false,false,false,false,false]
-    //         },
-
-    //     ]
-    // props.dispatch(updateTaskDetails(players));
-
-    
-    window.location.href = "/game"; 
+    submitHandler(e) {
+        e.preventDefault();
+        this.props.startGame();
+        this.props.history.push("game");
     }
 
-    return (
-        <div className='welcome-container ml-28'>
-            <div className='welcome-content'>
-                <form onSubmit={submitHandler}>  
-                    <h3>
-                        <span 
-                            className='welcome-text'>
-                            Welcome to  &nbsp; 
-                        </span>
-                        <span 
-                            className='tic-text'>
-                            TIC TAC TOE
-                        </span>
-                    </h3>
-                    <label 
-                        className='form-label'>
-                        PLAYER 1
-                    </label>
-                    <input 
-                        type='text' 
-                        placeholder='Enter Name' 
-                        className='form-input'
-                        onChange={event => setpalyerA(event.target.value)}
-                        required
-                    />
-                    <label className='form-label'>PLAYER 2</label>
-                    <input 
-                        type='text' 
-                        placeholder='Enter Name' 
-                        className='form-input'
-                        onChange={event => setpalyerB(event.target.value)}
-                        required
-                    />
-                    <button 
-                        className='continue'
-                        type='submit'>
-                        Continue
-                    </button>
-                </form>
+    render(){
+        return (
+            <div className='welcome-container ml-28'>
+                <div className='welcome-content'>
+                    <form onSubmit={this.submitHandler.bind(this)}>
+                        <h3>
+                            <span 
+                                className='welcome-text'>
+                                Welcome to  &nbsp; 
+                            </span>
+                            <span 
+                                className='tic-text'>
+                                TIC TAC TOE
+                            </span>
+                        </h3>
+                        <label 
+                            className='form-label'>
+                            PLAYER 1
+                        </label>
+                        <input 
+                            type='text' 
+                            placeholder='Enter Name' 
+                            className='form-input'
+                            value={this.props.playerA}
+                            onChange={e => this.props.setUserNames(e.target.value, this.props.playerB)}
+                            required
+                        />
+                        <label className='form-label'>PLAYER 2</label>
+                        <input 
+                            type='text' 
+                            placeholder='Enter Name' 
+                            className='form-input'
+                            value={this.props.playerB}
+                            onChange={e => this.props.setUserNames(this.props.playerA, e.target.value)}
+                            required
+                        />
+                        <button 
+                            className='continue'
+                            type='submit'>
+                            Continue
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
-    );
+        )
+    };
   }
 
-    function mapStateToProps(state) {
-        return {
-            updateTaskDetails: state.updateTaskDetails
-        }
+const mapStateToProps = state => {
+    return {
+        playerA:state.player_info.players.playerA.name,
+        playerB:state.player_info.players.playerB.name
     }
+}
 
-export default connect(mapStateToProps)(Welcome);
+const mapDispatchToprops = (dispatch) => {
+    return{
+        setUserNames:(playerA, playerB) => { dispatch(setUserNames(playerA, playerB)) },
+        startGame:() => { dispatch(startGame()) }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToprops)(withRouter(Welcome));

@@ -15,7 +15,7 @@ export default function Winner (){
                 </h3>
                 <div className='winner border-orange'>
                     <p className='text-orange'>PLAYER 1</p>
-                    {/* <p>{this.props.playerOne}</p> */}
+                    {/* <p>{this.props.playerA}</p> */}
                     <p className='winner-name'>John Deo</p>
                     <p><img src={xx_icon} alt='img'/></p>
                 </div>

@@ -1,102 +1,105 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from "react-router-dom";
 import x_icon from '../assets/close_x.svg';
 import Board from './Board';
-
-import { updateTaskDetails } from '../actions';
+import Dot from './Dot';
+import { OnStepChange,updateRoundStatus, resetGameHistory, resetRoundHistory } from '../actions';
 
 class Game extends Component {
 
-  constructor(props){
-    super(props);
-    this.state = {
-      xIsNext :true,
-      stepNumber : 0,
-      history: [
-        { squares: Array(9).fill(null) }
-      ],
-      // round : 0
-    }
-  }
-
   handleClick(i){
-    const history = this.state.history.slice(0,this.state.stepNumber+1);
-    const current = history[history.length-1];
+    const gameHistory = this.props.gameHistory.slice(0,this.props.stepNumber+1);
+    const current = gameHistory[gameHistory.length-1];
     const squares = current.squares.slice();
     const winner = calculateWinner(squares);
-    if(winner || squares[i]){
+    if(winner.winnerSign || squares[i]){
       return;
     }
-    squares[i] = this.state.xIsNext ? "X" : "O";
-    this.setState({
-      history: history.concat({
-        squares:squares
-      }),
-      xIsNext: !this.state.xIsNext,
-      stepNumber: history.length
-    })
+    squares[i] = this.props.xIsNext ? "X" : "O";
+    this.props.OnStepChange(squares);
   }
 
   render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
-    let status,playerOneStatus,playerTwoStatus;
-    if(winner){
-      // status = "Winner is " + winner;
-      winner === 'X' ? (playerOneStatus = 'Winner'):(playerTwoStatus = 'Winner')
+    const gameHistory = this.props.gameHistory;
+    const current = gameHistory[this.props.stepNumber];
+    const {isDraw, winnerSign} = calculateWinner(current.squares);
+    let status,playerOneStatus,playerTwoStatus,winner;
+    if(this.props.gameCompleted){
+      let message = this.props.isGameDraw ? 'Game Drawn' : `Congrats ${this.props.gameWinner}!!!, You have won the game`
+      window.alert(message)
+      this.props.resetGameHistory();
+      this.props.history.push("/");
+    }
+    if(isDraw || winnerSign){
+      if (!isDraw){
+        if (winnerSign === 'X'){
+          playerOneStatus = 'Winner'
+          winner = 'playerA'
+        } 
+        else
+        {
+          playerTwoStatus = 'Winner'
+          winner = 'playerB'
+        }
+      }
+      this.props.updateRoundStatus(isDraw, winner);
+      this.props.resetRoundHistory();
+      // this.props.history.push("");
+
     }
     else{
-      status = "Next player is "+ (this.state.xIsNext ? "X" : "O");
-      playerOneStatus = (this.state.xIsNext ? "Your Turn" : "");
-      playerTwoStatus = (!this.state.xIsNext ? "Your Turn" : "");
+      status = "Next player is "+ (this.props.xIsNext ? "X" : "O");
+      playerOneStatus = (this.props.xIsNext ? "Your Turn" : "");
+      playerTwoStatus = (!this.props.xIsNext ? "Your Turn" : "");
     }
 
     return (
       <div className='container'>
-        <div className='player-status-1'>
-          <p>{playerOneStatus}</p>
-          <div className='player-container-1'>
-            <p className='text-orange'>player 1</p>
-            {/* <p>{this.props.playerOne}---</p> */}
-            <p>John Deo</p>
-
-            <p><img src={x_icon} alt='img'/></p>
+        <div className='player-1-status'>
+          <div className='player-status'>
+            { playerOneStatus }
           </div>
-          <span className="dot"></span>
-          <span className="dot"></span>
-          <span className="dot"></span>
-          <span className="dot"></span>
-          <span className="dot"></span>
-          <span className="dot"></span>
-          
+          <div className='player-1-container'>
+            <p className='text-orange'>
+              player 1
+            </p>
+            <p>
+              { this.props.playerA.name }
+            </p>
+            <p><img src={ x_icon } alt='img'/></p>
+          </div>
+          <Dot player ={ this.props['playerA']["noOfWins"] }/>
           <div className='game-info'>
             {status}
           </div>
         </div>
         <div className='welcome-container'>
           <div className='game-container'>
-            <Board onClick={(i)=>this.handleClick(i)} squares={current.squares}/>
+            <Board onClick={ (i)=>this.handleClick(i) } squares={ current.squares }/>
           </div>
         </div>
-        <div className='player-status-2'>
-          <p>{playerTwoStatus}</p>
-          <div className='player-container-2'>
-            <p className='text-orange'>player 2</p>
-            <p>Doe John</p>
+        <div className='player-2-status'>
+          <div className='player-status'>
+            { playerTwoStatus }
+          </div>
+          <div className='player-2-container'>
+            <p className='text-orange'>
+              player 2
+            </p>
+            <p>
+              { this.props.playerB.name }
+            </p>
             <p className='cirxle_x'>O</p>
           </div>
-
-          <span className="dot"></span>
-          <span className="dot"></span>
-          <span className="dot"></span>
-          <span className="dot"></span>
-          <span className="dot-grey"></span>
-          <span className="dot-grey"></span>
+          <Dot player ={ this.props['playerB']["noOfWins"] }/>
+            <button >Next Round</button>
         </div>
       </div>
     );
   }
 }
+
 function calculateWinner(squares){
   const lines= [
     [0,1,2],
@@ -108,13 +111,38 @@ function calculateWinner(squares){
     [0,4,8],
     [2,4,6]
   ]
-  for (let i = 0; i < lines.length; i++) {
+  for (var i = 0; i < lines.length; i++) {
     const [a,b,c] = lines[i];
     if(squares[a] && squares[a] === squares[b] && squares[b] === squares[c]){
-      return squares[a];
+      return { isDraw: false, winnerSign: squares[a]};
     }
   }
-  return null;
+  return {
+    isDraw: squares.length === lines.length,
+    winnerSign: null
+  };
 }
 
-export default Game;
+const mapStateToProps = state => {
+  console.log("state::",state);
+  return {
+    gameHistory: state.game_info.gameHistory,
+    xIsNext:state.game_info.xIsNext,
+    stepNumber:state.game_info.stepNumber,
+    playerA:state.player_info.players.playerA,
+    playerB:state.player_info.players.playerB,
+    gameCompleted: state.player_info.gameCompleted,
+    isGameDraw: state.player_info.isGameDraw,
+    gameWinner: state.player_info.gameWinner
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    OnStepChange:(squares) => { dispatch(OnStepChange(squares)) },
+    updateRoundStatus:(isDraw,winner) => { dispatch(updateRoundStatus(isDraw,winner))},
+    resetRoundHistory:() => { dispatch(resetRoundHistory()) },
+    resetGameHistory:() => { dispatch(resetGameHistory()) }
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Game));
