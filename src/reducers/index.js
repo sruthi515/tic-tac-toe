@@ -1,9 +1,16 @@
 import { combineReducers } from 'redux'
-import { START_GAME, ON_STEP_CHANGE, SET_USER_NAMES, UPDATE_ROUND_STATUS, RESET_ROUND_HISTORY, RESET_GAME_HISTORY } from '../actions'
+import { START_GAME, 
+        ON_STEP_CHANGE, 
+        SET_USER_NAMES, 
+        UPDATE_ROUND_STATUS, 
+        RESET_ROUND_HISTORY, 
+        RESET_GAME_HISTORY,
+        SET_WINNER_DETAILS 
+    } from '../actions'
 
 let playersInitialState = {
     roundNumber: 0,
-    totalRounds: 1,
+    totalRounds: 6,
     gameCompleted: false,
     isGameDraw: false,
     gameWinner: null,
@@ -23,18 +30,13 @@ function playerHandler(state = playersInitialState, action) {
 
     switch (action.type) {
         case UPDATE_ROUND_STATUS:
-            // debugger;
-
-            let gameCompleted = (state.roundNumber == state.totalRounds)
-
+            let gameCompleted = (state.roundNumber === state.totalRounds)
             var newState = { ...state, roundNumber: state.roundNumber + 1, gameCompleted }
-
             newState.players[action.winner]["noOfWins"][state.roundNumber - 1] = true
-
             if (gameCompleted) {
                 let noOfWinsForA = newState.players.playerA.noOfWins.filter(Boolean).length
                 let noOfWinsForB = newState.players.playerB.noOfWins.filter(Boolean).length
-                let isGameDraw = noOfWinsForA == noOfWinsForB
+                let isGameDraw = noOfWinsForA === noOfWinsForB
                 let gameWinner = isGameDraw ? null : (noOfWinsForA > noOfWinsForB ? state.players.playerA.name : state.players.playerB.name)
                 newState = { ...newState, gameCompleted: true, isGameDraw, gameWinner }
             }
@@ -50,13 +52,12 @@ function playerHandler(state = playersInitialState, action) {
             return current_state;
 
         case RESET_GAME_HISTORY:
-            debugger;
             var newState = {
                 roundNumber: 0,
-                totalRounds: 1,
+                totalRounds: 6,
                 gameCompleted: false,
                 isGameDraw: false,
-                gameWinner: null,
+                gameWinner: state.gameWinner,
                 players: {
                     playerA: {
                         name: '',
@@ -70,8 +71,11 @@ function playerHandler(state = playersInitialState, action) {
             }
             newState.players.playerA.name = state.players.playerA.name
             newState.players.playerB.name = state.players.playerB.name
-            debugger;
             return newState;
+        case  SET_WINNER_DETAILS:
+            let winner_state = { ...state }
+            winner_state.gameWinner = state.gameWinner
+            return winner_state;
 
         default: return state;
     }
@@ -85,7 +89,6 @@ let gameInitialState = {
     ],
 }
 function gameHandler(state = gameInitialState, action) {
-    // debugger;
     switch (action.type) {
         case ON_STEP_CHANGE:
             return {
@@ -95,9 +98,9 @@ function gameHandler(state = gameInitialState, action) {
                 }),
                 stepNumber: state.gameHistory.length,
             }
+
         case RESET_ROUND_HISTORY:
             let newState = { ...state, ...gameInitialState }
-            // debugger
             return newState;
 
         default: return state;

@@ -1,5 +1,4 @@
 .App {
-  /* text-align: center; */
   color: white;
 }
 
@@ -7,85 +6,190 @@
   margin-top: 42px;
   margin-left: 68px;
 }
-.welcome-border{
-  opacity: 0.11;
-}
+
 .container{
   display:flex;
 }
+
+.welcome-border{
+  opacity: 0.11;
+}
+
 .welcome-container{
-  padding: 20px;
-  color: #F0F0F0;
-  /* width: 480px; */
   width: 36%;
   height: 480px;
-  border: 2px dashed #515964;
-  background: #0B233F 0% 0% no-repeat padding-box;
-  border-radius: 24px;
-  /* margin-left: 28%; */
+  padding: 20px;
   margin-left: 4%;
+  color: #F0F0F0;
+  border-radius: 24px;
+  border: 2px dashed #515964;
   box-shadow: 0px 3px 6px #000000;
+  background: #0B233F 0% 0% no-repeat padding-box;
 }
-.player-1-status{
-  flex: 0.3;
-  align-self: center;
-  margin-left: 15%;
-  text-align: center;
 
-}
-.player-2-status{
-  flex: 0.3;
-  height: 200px;
-  text-align: center;
-  align-self: center;
-  margin-left: 5%;
-  margin-top: -26px;
-}
-.winner{
-  text-align: center;
-  width: 230px;
-  height: 200px;
-  margin-left: 15%;
-  padding-bottom:15px;
-}
-.winner-name{
-  font-size:25px;
-  font-weight: bold;
-}
-.player-1-container{
-  padding: 3px 15px;
-  border-radius: 24px;
-  background: #253952 0% 0% no-repeat padding-box; 
-
-}
-.player-2-container{
-  padding: 3px 15px;
-  border-radius: 24px;
-  background: #253952 0% 0% no-repeat padding-box; 
-
-}
 .welcome-content{  
-  /* width: 340px;
-  height: 362px; */
   width: 70%;
   height: 76%;
   padding: 56px 70px;
   border-radius: 24px;
   background: #253952 0% 0% no-repeat padding-box;
 }
-.game-container{  
-  /* width: 340px;
-  height: 362px; */
-  /* width: 70%; */
-  height: 100%;
-  /* padding: 56px 70px; */
-  border-radius: 24px;
-  background: #253952 0% 0% no-repeat padding-box;  
-}
+
 .welcome-text{
   letter-spacing: 0.83px;
   text-align: center;
 }
+
+.tic-text{
+  color: #FBA202;
+  letter-spacing: 0.83px;
+  text-align: center;
+}
+
+.game-container{
+  height: 100%;
+  border-radius: 24px;
+  background: #253952 0% 0% no-repeat padding-box;  
+}
+
+.player-1-container{
+  padding: 3px 15px;
+  border-radius: 24px;
+  background: #253952 0% 0% no-repeat padding-box; 
+}
+
+.player-2-container{
+  padding: 3px 15px;
+  border-radius: 24px;
+  background: #253952 0% 0% no-repeat padding-box; 
+}
+
+.player-1-status{
+  flex: 0.3;
+  align-self: center;
+  margin-left: 15%;
+  text-align: center;
+}
+
+.player-2-status{
+  flex: 0.3;
+  height: 200px;
+  margin-left: 5%;
+  margin-top: -26px;
+  text-align: center;
+  align-self: center;
+}
+
+.continue{
+  opacity: 1;
+  width: 97%;
+  height: 49px;
+  color: white;
+  border: black;
+  margin-top: 15px;
+  border-radius: 2px;
+  box-shadow: 0px 3px 6px #000000;
+  background: transparent linear-gradient(270deg, #FBA202 0%, #FF5800 100%) 0% 0% no-repeat padding-box;
+}
+
+.form-group{
+  display: grid;
+  margin: 30px 0px;
+}
+
+.form-input{
+  opacity: 1;
+  width: 88%;
+  height: 49px;
+  color: white;
+  margin:10px 0px;
+  padding: 0px 14px;
+  border-radius: 2px;
+  border: 1px solid #F0F0F0;
+  background: #253952 0% 0% no-repeat padding-box;
+}
+
+.form-label{
+  text-align: left;
+  margin: 5px 0px;
+}
+
+.grid-row {
+  display: grid;
+  height: inherit;
+  grid-template-columns: auto auto auto;
+}
+
+.grid-item {
+  width: 155px;
+  height: 160px;
+  outline: none;
+  color: white;
+  font-size: 30px;
+  font-size: 100px;
+  font-weight: bold;
+  text-align: center;
+  border: 1px dashed #515964;
+  background: #253952 0% 0% no-repeat padding-box;
+}
+
+.dot {
+  opacity: 1;
+  width: 10px;
+  height: 10px;
+  margin:10px 5px;
+  border-radius: 50%;
+  display: inline-block;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+}
+
+.dot-grey{
+  width: 10px;
+  height: 10px;
+  opacity: 0.25;
+  margin:10px 5px;
+  border-radius: 50%;
+  display: inline-block;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+}
+
+.player-status{
+  margin: 0;
+  min-height: 20px;
+}
+
+.circle_x{
+  font-size: 50px;
+  font-weight: bold;
+  margin: 0px;
+}
+
+.ml-28{
+  margin-left: 28%;
+}
+
+.text-orange{
+  color: orange;
+}
+
+.border-orange{
+  border: 2px solid orange;
+  border-radius:24px;
+}
+
+.winner{
+  width: 230px;
+  height: 200px;
+  margin-left: 15%;
+  padding-bottom:15px;
+  text-align: center;
+}
+
+.winner-name{
+  font-size:20px;
+  font-weight: bold;
+}
+
 .winner-text{
   letter-spacing: 0.83px;
   text-align: center;
@@ -93,100 +197,9 @@
   font-size: 25px;
   font-weight: normal;
 }
-.tic-text{
-  color: #FBA202;
-  letter-spacing: 0.83px;
-  text-align: center;
-}
-.continue{
-  /* width: 330px; */
-  width: 97%;
-  height: 49px;
-  background: transparent linear-gradient(270deg, #FBA202 0%, #FF5800 100%) 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 6px #000000;
-  border-radius: 2px;
-  opacity: 1;
-  color: white;
-  border: black;
-  margin-top: 15px;
-}
-.form-group{
-  display: grid;
-  margin: 30px 0px;
-}
-.form-input{
-  /* width: 300px;
-  height: 49px; */
-  width: 88%;
-  height: 49px;
-  color: white;
-  border: 1px solid #F0F0F0;
-  background: #253952 0% 0% no-repeat padding-box;
-  border-radius: 2px;
-  padding: 0px 14px;
-  margin:10px 0px;
-  opacity: 1;
-}
-.form-label{
-  text-align: left;
-  margin: 5px 0px;
-}
-.grid-row {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  /* padding: 10px; */
-  height: inherit;
-}
-.grid-item {
-  border: 1px dashed #515964;
-  color: white;
-  width: 155px;
-  height: 160px;
-  font-size: 30px;
-  text-align: center;
-  font-size: 100px;
-  font-weight: bold;
-  outline: none;
-  /* border-bottom: 2px dashed #515964; */
-  background: #253952 0% 0% no-repeat padding-box;
-}
-.cirxle_x{
-  font-size: 50px;
-  font-weight: bold;
+
+.winner-symbol{
   margin: 0px;
-}
-.ml-28{
-  margin-left: 28%;
-}
-.text-orange{
-  color: orange;
-}
-.border-orange{
-  border: 2px solid orange;
-  border-radius:24px;
-}
-
-.dot {
-  height: 10px;
-  width: 10px;
-  margin:10px 5px;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  opacity: 1;
-  border-radius: 50%;
-  display: inline-block;
-}
-.dot-grey{
-  height: 10px;
-  width: 10px;
-  margin:10px 5px;
-  border-radius: 50%;
-  display: inline-block;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  opacity: 0.25;
-}
-
-.player-status{
-  margin: 0;
-    /* padding: 10px 0px; */
-    min-height: 20px;
+  font-size: 70px;
+  font-weight: bold;
 }

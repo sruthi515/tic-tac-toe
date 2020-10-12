@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import logo from '../assets/TicTacToe.svg';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Welcome from './Welcome';
 import Game from './Game';
 import Winner from './Winner';
+import logo from '../assets/TicTacToe.svg';
 
 class Join extends Component {
-
   render() {
     return (
       <Router>
