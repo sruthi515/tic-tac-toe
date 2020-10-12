@@ -88,6 +88,7 @@ let gameInitialState = {
         { squares: Array(9).fill(null) }
     ],
 }
+
 function gameHandler(state = gameInitialState, action) {
     switch (action.type) {
         case ON_STEP_CHANGE:
@@ -111,4 +112,5 @@ const playerReducer = combineReducers({
     player_info: playerHandler,
     game_info: gameHandler
 })
+
 export default playerReducer;
